@@ -13,8 +13,8 @@ Complete installation instructions for EventPing Chrome extension.
 ### 1. Clone Repository & Run Setup
 
 ```bash
-git clone https://github.com/devppratik/extension-email-register.git
-cd extension-email-register
+git clone https://github.com/devppratik/EventPing-extension.git
+cd EventPing-extension
 ./scripts/setup.sh
 ```
 
@@ -75,7 +75,7 @@ If not provided, you'll manually edit `manifest.json` in step 4.
 1. Open `chrome://extensions/`
 2. Enable **Developer mode** (top-right toggle)
 3. Click **Load unpacked**
-4. Select the `extension-email-register` folder
+4. Select the `EventPing-extension` folder
 5. Extension loads → note Extension ID (e.g., `logcacfonhedncnnigehlajkaogicfkb`)
 
 ### 4. Update manifest.json
@@ -191,7 +191,7 @@ See [PRIVACY.md](PRIVACY.md) for full policy.
 
 1. Check this troubleshooting guide
 2. Inspect service worker console: `chrome://extensions/` → EventPing → "service worker"
-3. Open issue: [GitHub Issues](https://github.com/devppratik/extension-email-register/issues)
+3. Open issue: [GitHub Issues](https://github.com/devppratik/EventPing-extension/issues)
 
 ## Next Steps
 
