@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EventPing</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="icons/icon48.png" alt="EventPing" class="header-logo">
+      <h1>EventPing</h1>
+    </header>
+
+    <div class="status">
+      <div class="status-item">
+        <span class="label">Status:</span>
+        <span id="status" class="value">Active</span>
+      </div>
+      <div class="status-item">
+        <span class="label">Last Check:</span>
+        <span id="lastCheck" class="value">Never</span>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="checkNow" class="btn btn-primary">
+        Check Emails Now
+      </button>
+      <button id="openOptions" class="btn btn-secondary">
+        Settings
+      </button>
+    </div>
+
+    <div class="section">
+      <h2>Pending Registrations (<span id="pendingCount">0</span>)</h2>
+      <div id="pendingList" class="registration-list">
+        <p class="empty-state">No pending registrations found</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Detected Forms (<span id="formsCount">0</span>)</h2>
+      <div id="formsList" class="registration-list">
+        <p class="empty-state">No forms detected yet</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

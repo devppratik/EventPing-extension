@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EventPing - Settings</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      padding: 40px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .settings-header {
+      margin-bottom: 32px;
+    }
+    .settings-header h1 {
+      margin: 0 0 8px 0;
+      font-size: 28px;
+      color: #333;
+    }
+    .settings-header p {
+      margin: 0;
+      color: #666;
+    }
+    .setting-group {
+      background: white;
+      padding: 24px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      border: 1px solid #e0e0e0;
+    }
+    .setting-group h2 {
+      margin: 0 0 16px 0;
+      font-size: 18px;
+      color: #333;
+    }
+    .setting-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .setting-row:last-child {
+      border-bottom: none;
+    }
+    .setting-label {
+      flex: 1;
+    }
+    .setting-label h3 {
+      margin: 0 0 4px 0;
+      font-size: 14px;
+      font-weight: 500;
+      color: #333;
+    }
+    .setting-label p {
+      margin: 0;
+      font-size: 13px;
+      color: #666;
+    }
+    .setting-control {
+      margin-left: 16px;
+    }
+    input[type="time"],
+    input[type="text"],
+    select {
+      padding: 8px 12px;
+      border: 1px solid #d0d0d0;
+      border-radius: 4px;
+      font-size: 14px;
+      min-width: 120px;
+    }
+    .toggle-switch {
+      position: relative;
+      width: 48px;
+      height: 24px;
+      background: #ccc;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .toggle-switch.active {
+      background: #4285f4;
+    }
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      transition: left 0.3s;
+    }
+    .toggle-switch.active::after {
+      left: 26px;
+    }
+    .save-notice {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #34a853;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s;
+      pointer-events: none;
+    }
+    .save-notice.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="settings-header">
+    <h1>⚙️ Settings</h1>
+    <p>Configure your registration reminder preferences</p>
+  </div>
+
+  <div class="setting-group">
+    <h2>General Settings</h2>
+
+    <div class="setting-row">
+      <div class="setting-label">
+        <h3>Enable Extension</h3>
+        <p>Turn the extension on or off</p>
+      </div>
+      <div class="setting-control">
+        <div id="enabledToggle" class="toggle-switch active"></div>
+      </div>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-label">
+        <h3>Daily Check Time</h3>
+        <p>What time should we check your emails? (Uses your current local time. If you travel across timezones, the check will run at this time in your new timezone.)</p>
+      </div>
+      <div class="setting-control">
+        <input type="time" id="checkTime" value="09:00">
+      </div>
+    </div>
+  </div>
+
+  <div class="setting-group">
+    <h2>Email Filters</h2>
+
+    <div class="setting-row">
+      <div class="setting-label">
+        <h3>Include Keywords</h3>
+        <p>Search for emails containing these words (comma-separated)</p>
+      </div>
+      <div class="setting-control">
+        <input type="text" id="includeKeywords" placeholder="e.g., register, signup, rsvp" style="min-width: 300px;">
+      </div>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-label">
+        <h3>Exclude Keywords</h3>
+        <p>Skip emails containing these words (comma-separated)</p>
+      </div>
+      <div class="setting-control">
+        <input type="text" id="excludeKeywords" placeholder="e.g., spam, unsubscribe" style="min-width: 300px;">
+      </div>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-label">
+        <h3>Include Email IDs</h3>
+        <p>Only check emails from these senders (comma-separated)</p>
+      </div>
+      <div class="setting-control">
+        <input type="text" id="includeEmails" placeholder="e.g., events@eventbrite.com" style="min-width: 300px;">
+      </div>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-label">
+        <h3>Exclude Email IDs</h3>
+        <p>Skip emails from these senders (comma-separated)</p>
+      </div>
+      <div class="setting-control">
+        <input type="text" id="excludeEmails" placeholder="e.g., spam@example.com" style="min-width: 300px;">
+      </div>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-label">
+        <h3>Max Results</h3>
+        <p>Maximum number of emails to check per run</p>
+      </div>
+      <div class="setting-control">
+        <select id="maxResults">
+          <option value="10">10</option>
+          <option value="20" selected>20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="setting-group">
+    <h2>Notifications</h2>
+
+    <div class="setting-row">
+      <div class="setting-label">
+        <h3>Desktop Notifications</h3>
+        <p>Show notifications when registration forms are found</p>
+      </div>
+      <div class="setting-control">
+        <div id="notificationsToggle" class="toggle-switch active"></div>
+      </div>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-label">
+        <h3>Auto-Open Tabs</h3>
+        <p>Automatically open registration URLs in background tabs</p>
+      </div>
+      <div class="setting-control">
+        <div id="autoOpenToggle" class="toggle-switch active"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="setting-group">
+    <h2>Data Management</h2>
+
+    <div class="setting-row">
+      <div class="setting-label">
+        <h3>Clear Processed Emails</h3>
+        <p>Reset the list of already processed emails</p>
+      </div>
+      <div class="setting-control">
+        <button id="clearProcessed" class="btn btn-secondary">Clear</button>
+      </div>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-label">
+        <h3>Clear Dismissed URLs</h3>
+        <p>Reset the list of dismissed registration links</p>
+      </div>
+      <div class="setting-control">
+        <button id="clearDismissed" class="btn btn-secondary">Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="save-notice" id="saveNotice">
+    Settings saved ✓
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

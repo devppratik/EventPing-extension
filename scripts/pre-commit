@@ -1,0 +1,16 @@
+#!/bin/sh
+# Pre-commit hook to prevent committing real OAuth credentials
+
+# Check if manifest.json is being committed
+if git diff --cached --name-only | grep -q "manifest.json"; then
+  # Check for real Client ID pattern (not placeholder)
+  if git diff --cached manifest.json | grep -E '\+.*"client_id".*[0-9]{12}-[a-z0-9]{32}\.apps\.googleusercontent\.com' > /dev/null; then
+    echo "ERROR: Attempting to commit real OAuth Client ID in manifest.json"
+    echo "Please use placeholder: YOUR_CLIENT_ID.apps.googleusercontent.com"
+    echo ""
+    echo "To bypass (NOT recommended): git commit --no-verify"
+    exit 1
+  fi
+fi
+
+exit 0
