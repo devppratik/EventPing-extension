@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventPing - Privacy Policy</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            color: #333;
+        }
+        h1 { color: #2c3e50; margin-top: 0; }
+        h2 { color: #34495e; margin-top: 32px; border-bottom: 2px solid #eee; padding-bottom: 8px; }
+        h3 { color: #555; margin-top: 24px; }
+        code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; font-size: 0.9em; }
+        pre { background: #f5f5f5; padding: 16px; border-radius: 4px; overflow-x: auto; }
+        ul { padding-left: 24px; }
+        strong { color: #2c3e50; }
+        a { color: #3498db; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .updated { color: #666; font-size: 0.9em; margin-bottom: 32px; }
+    </style>
+</head>
+<body>
+    <h1>Privacy &amp; Data Storage</h1>
+    <p class="updated">Last Updated: June 2026</p>
+
+    <h2>All Data Stays Local</h2>
+    <p>Extension stores all data locally in Chrome storage. Nothing sent to external servers.</p>
+
+    <h2>Detected Forms Privacy Protection</h2>
+    <p>When the extension detects registration forms on pages you visit, it stores <strong>only the domain name</strong> (e.g., <code>eventbrite.com</code>), not the full URL or path. This protects your privacy by:</p>
+    <ul>
+        <li>Not tracking specific pages you visit</li>
+        <li>Not storing query parameters that might contain sensitive data</li>
+        <li>Minimizing stored information</li>
+    </ul>
+    <p><strong>Trade-off:</strong> The "Open" button in detected forms navigates to the domain homepage rather than the exact registration page. You may need to navigate to the form manually.</p>
+
+    <h2>What Gets Stored</h2>
+
+    <h3>chrome.storage.sync (synced across devices)</h3>
+    <ul>
+        <li><code>enabled</code>: boolean - extension on/off</li>
+        <li><code>checkTime</code>: string - daily check time</li>
+        <li><code>includeKeywords</code>: array - keywords to search for</li>
+        <li><code>excludeKeywords</code>: array - keywords to skip</li>
+        <li><code>includeEmails</code>: array - allowed sender emails</li>
+        <li><code>excludeEmails</code>: array - blocked sender emails</li>
+        <li><code>maxResults</code>: number - max emails per check</li>
+        <li><code>notifications</code>: boolean - show notifications</li>
+        <li><code>autoOpen</code>: boolean - auto-open tabs</li>
+        <li><code>processedEmails</code>: array - already-checked email IDs (last 100)</li>
+        <li><code>dismissedUrls</code>: array - URLs user dismissed (last 200)</li>
+    </ul>
+
+    <h3>chrome.storage.local (device-only)</h3>
+    <ul>
+        <li><code>pendingRegistrations</code>: array - current registration URLs waiting</li>
+        <li><code>detectedForms</code>: array - forms found on pages</li>
+    </ul>
+
+    <h2>External Data Access</h2>
+    <p>Extension only calls:</p>
+    <ul>
+        <li><strong>Gmail API</strong> (<code>https://gmail.googleapis.com</code>) - read unread emails matching your filters</li>
+        <li><strong>Google OAuth</strong> - authenticate (standard Google login flow)</li>
+    </ul>
+    <p><strong>No tracking. No analytics. No third-party servers.</strong></p>
+
+    <h2>Data You Control</h2>
+
+    <h3>View stored data</h3>
+    <pre><code>// Open console in extension popup (right-click > Inspect)
+chrome.storage.sync.get(null, console.log);
+chrome.storage.local.get(null, console.log);</code></pre>
+
+    <h3>Clear all data</h3>
+    <p>Settings page has buttons to clear:</p>
+    <ul>
+        <li>Processed emails list</li>
+        <li>Dismissed URLs list</li>
+    </ul>
+    <p>Or clear everything:</p>
+    <pre><code>chrome.storage.sync.clear();
+chrome.storage.local.clear();</code></pre>
+
+    <h3>Revoke Gmail access</h3>
+    <p>Go to: <a href="https://myaccount.google.com/permissions" target="_blank">https://myaccount.google.com/permissions</a><br>
+    Find "EventPing" → Remove access</p>
+
+    <h2>Gmail API Permissions</h2>
+    <p>Extension requests:</p>
+    <ul>
+        <li><code>https://www.googleapis.com/auth/gmail.readonly</code> - read-only access to Gmail</li>
+    </ul>
+
+    <h3>What it reads:</h3>
+    <ul>
+        <li>Unread emails matching your keyword/sender filters</li>
+        <li>Email subject, sender, body text (to extract URLs)</li>
+    </ul>
+
+    <h3>What it cannot do:</h3>
+    <ul>
+        <li>Send emails</li>
+        <li>Delete emails</li>
+        <li>Modify emails</li>
+        <li>Access sent/drafts/trash</li>
+        <li>Read emails after marking as read</li>
+    </ul>
+
+    <h2>OAuth Token Storage</h2>
+    <p>Chrome stores OAuth token securely via <code>chrome.identity</code> API. Extension cannot export or view raw token. Token auto-refreshes when expired.</p>
+
+    <h2>Sync vs Local</h2>
+    <p><strong>chrome.storage.sync</strong> (8 KB limit):</p>
+    <ul>
+        <li>Settings and filters</li>
+        <li>Small lists (processed emails, dismissed URLs)</li>
+        <li>Syncs across Chrome browsers signed into same Google account</li>
+    </ul>
+
+    <p><strong>chrome.storage.local</strong> (10 MB limit):</p>
+    <ul>
+        <li>Pending URLs and detected forms</li>
+        <li>Stays on current device only</li>
+    </ul>
+
+    <h2>No Server Communication</h2>
+    <p>Extension architecture:</p>
+    <pre><code>Your Browser → Gmail API (Google's servers)
+     ↓
+Local Chrome Storage (your device)</code></pre>
+    <p>No intermediate servers. No data leaves your control except OAuth requests to Google.</p>
+
+    <hr style="margin-top: 48px; border: none; border-top: 1px solid #eee;">
+    <p style="text-align: center; color: #666; font-size: 0.9em;">
+        EventPing Extension |
+        <a href="https://github.com/devppratik/EventPing-extension">GitHub</a>
+    </p>
+</body>
+</html>
