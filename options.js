@@ -27,6 +27,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   setupToggle('notificationsToggle', 'notifications', true);
   setupToggle('autoOpenToggle', 'autoOpen', true);
 
+  // Client ID input (Firefox only)
+  const clientIdInput = document.getElementById('clientId');
+  if (clientIdInput) {
+    clientIdInput.addEventListener('input', (e) => {
+      debouncedSave('firefoxClientId', () => e.target.value.trim());
+    });
+  }
+
   // Input fields with debouncing
   document.getElementById('checkTime').addEventListener('change', async (e) => {
     await chrome.storage.sync.set({ checkTime: e.target.value });
@@ -85,7 +93,8 @@ async function loadSettings() {
     'excludeEmails',
     'maxResults',
     'notifications',
-    'autoOpen'
+    'autoOpen',
+    'firefoxClientId'
   ]);
 
   // Set toggle states
@@ -100,6 +109,12 @@ async function loadSettings() {
   document.getElementById('includeEmails').value = (settings.includeEmails ?? []).join(', ');
   document.getElementById('excludeEmails').value = (settings.excludeEmails ?? []).join(', ');
   document.getElementById('maxResults').value = settings.maxResults ?? 20;
+
+  // Firefox Client ID (if element exists)
+  const clientIdInput = document.getElementById('clientId');
+  if (clientIdInput) {
+    clientIdInput.value = settings.firefoxClientId ?? '';
+  }
 }
 
 function setupToggle(elementId, settingKey, defaultValue) {

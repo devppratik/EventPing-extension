@@ -4,7 +4,7 @@
   <img src="icons/icon128.png" alt="EventPing Logo" width="128">
 </p>
 
-> Chrome extension that automatically scans Gmail for registration forms and reminds you about upcoming events.
+> Browser extension that automatically scans Gmail for registration forms and reminds you about upcoming events.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
@@ -12,7 +12,7 @@
 
 EventPing monitors your Gmail inbox for event registration emails (conferences, workshops, meetups) and surfaces them when you need them. All processing happens locally in your browser—no data leaves your machine.
 
-> **Browser Support:** Currently supports Chrome only. Firefox support coming soon.
+> **Browser Support:** Chrome (Manifest V3) and Firefox (Manifest V2). Arc, Brave, Edge support via Chrome build.
 
 **Key Features:**
 - 🔍 **Automatic scanning** - Daily Gmail checks for registration-related emails
@@ -24,7 +24,16 @@ EventPing monitors your Gmail inbox for event registration emails (conferences, 
 
 ## Quick Start
 
+**Chrome / Arc / Brave / Edge:**  
 See **[SETUP.md](SETUP.md)** for complete installation instructions.
+
+**Firefox:**  
+See **[SETUP.FIREFOX.md](SETUP.FIREFOX.md)** for Firefox-specific setup.
+
+Quick build:
+```bash
+./scripts/build-firefox.sh
+```
 
 ## Usage
 
